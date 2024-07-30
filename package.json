@@ -1,0 +1,19 @@
+{
+  "author": "Minor Gordon",
+  "bugs": {
+    "url": "https://github.com/minorg/purify-ts-helpers/issues"
+  },
+  "description": "Helper functions for working with purify-ts",
+  "homepage": "https://github.com/minorg/purify-ts-helpers#readme",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "purify-ts-helpers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minorg/purify-ts-helpers.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
