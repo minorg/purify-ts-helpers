@@ -1,3 +1,3 @@
-export * from "./Arrays";
-export * from "./AsyncIterables";
-export * from "./Maybes";
+export * from "./Arrays.js";
+export * from "./AsyncIterables.js";
+export * from "./Maybes.js";
