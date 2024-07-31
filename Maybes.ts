@@ -19,4 +19,15 @@ export namespace Maybes {
 
     return true;
   }
+
+  export function orThrowLazy<ValueT>(
+    maybe: Maybe<ValueT>,
+    orThrow: () => never,
+  ): ValueT {
+    if (maybe.isJust()) {
+      return maybe.extract() as ValueT;
+    }
+
+    orThrow();
+  }
 }
