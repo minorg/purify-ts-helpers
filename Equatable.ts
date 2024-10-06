@@ -90,8 +90,13 @@ export namespace Equatable {
           readonly type: "BooleanEquals";
         }
       | {
+          readonly left: any;
           readonly right: any;
           readonly type: "LeftError";
+        }
+      | {
+          readonly error: Error;
+          readonly type: "LeftPropertyAccess";
         }
       | {
           readonly right: any;
@@ -111,7 +116,12 @@ export namespace Equatable {
         }
       | {
           readonly left: any;
+          readonly right: any;
           readonly type: "RightError";
+        }
+      | {
+          readonly error: Error;
+          readonly type: "RightPropertyAccess";
         }
       | {
           readonly left: any;
@@ -159,8 +169,37 @@ export namespace Equatable {
     for (const propertyName of Object.keys(propertyValuesEqual)) {
       const propertyNameKeyof = propertyName as keyof ObjectT;
 
-      const leftPropertyValue = leftObject[propertyNameKeyof];
-      const rightPropertyValue = rightObject[propertyNameKeyof];
+      let leftPropertyValue: ObjectT[keyof ObjectT];
+      try {
+        leftPropertyValue = leftObject[propertyNameKeyof];
+      } catch (e) {
+        return Left({
+          left: leftObject,
+          right: rightObject,
+          propertyName,
+          propertyValuesUnequal: {
+            error: e as Error,
+            type: "LeftPropertyAccess",
+          },
+          type: "Property",
+        });
+      }
+
+      let rightPropertyValue: ObjectT[keyof ObjectT];
+      try {
+        rightPropertyValue = rightObject[propertyNameKeyof];
+      } catch (e) {
+        return Left({
+          left: leftObject,
+          right: rightObject,
+          propertyName,
+          propertyValuesUnequal: {
+            error: e as Error,
+            type: "RightPropertyAccess",
+          },
+          type: "Property",
+        });
+      }
 
       // biome-ignore lint/style/noNonNullAssertion: <explanation>
       const booleanOrEqualsResult = propertyValuesEqual[propertyNameKeyof]!(
@@ -171,7 +210,7 @@ export namespace Equatable {
       let propertyValuesUnequal: EqualsResult.Unequal;
       if (typeof booleanOrEqualsResult === "boolean") {
         if (booleanOrEqualsResult) {
-          return EqualsResult.Equal;
+          continue; // To the next property
         }
         propertyValuesUnequal = {
           left: leftPropertyValue,
@@ -179,7 +218,7 @@ export namespace Equatable {
           type: "BooleanEquals",
         };
       } else if (booleanOrEqualsResult.isRight()) {
-        return booleanOrEqualsResult;
+        continue; // To the next property
       } else {
         propertyValuesUnequal =
           booleanOrEqualsResult.extract() as EqualsResult.Unequal;
@@ -192,8 +231,6 @@ export namespace Equatable {
         propertyValuesUnequal: propertyValuesUnequal,
         type: "Property",
       });
-
-      // else continue to next property
     }
 
     return Equatable.EqualsResult.Equal;

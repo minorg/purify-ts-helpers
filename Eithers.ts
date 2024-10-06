@@ -17,6 +17,7 @@ export namespace Eithers {
         );
       }
       return Left({
+        left: leftEither.extract(),
         right: rightEither.extract(),
         type: "LeftError",
       });
@@ -24,6 +25,7 @@ export namespace Eithers {
     if (rightEither.isLeft()) {
       return Left({
         left: leftEither.unsafeCoerce(),
+        right: rightEither.unsafeCoerce(),
         type: "RightError",
       });
     }
