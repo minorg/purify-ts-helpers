@@ -4,14 +4,13 @@
     "url": "https://github.com/minorg/purify-ts-helpers/issues"
   },
   "dependencies": {
-    "iterator-helpers-polyfill": "^3.0.1",
     "purify-ts": "^2.1.0"
   },
   "description": "Helper functions for working with purify-ts",
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.4",
     "@tsconfig/strictest": "^2.0.5",
-    "typescript": "~5.5"
+    "typescript": "~5.6"
   },
   "engines": {
     "node": ">=20"
@@ -34,5 +33,5 @@
   },
   "type": "module",
   "types": "index.d.ts",
-  "version": "1.0.6"
+  "version": "1.0.7"
 }
