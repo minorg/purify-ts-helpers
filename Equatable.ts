@@ -25,7 +25,7 @@ export namespace Equatable {
   export function booleanEquals<T extends { equals: (other: T) => boolean }>(
     left: T,
     right: T,
-  ) {
+  ): EqualsResult {
     return Equatable.EqualsResult.fromBooleanEqualsResult(
       left,
       right,
@@ -38,7 +38,10 @@ export namespace Equatable {
    *
    * This is typically used as a property value comparator in objectEquals.
    */
-  export function equals<T extends Equatable<T>>(left: T, right: T) {
+  export function equals<T extends Equatable<T>>(
+    left: T,
+    right: T,
+  ): EqualsResult {
     return left.equals(right);
   }
 
@@ -146,7 +149,7 @@ export namespace Equatable {
    *
    * Typically used as a property value comparator in objectEquals when both property values are guaranteed to be null.
    */
-  export function nullEquals(_left: null, _right: null) {
+  export function nullEquals(_left: null, _right: null): EqualsResult {
     return Equatable.EqualsResult.Equal;
   }
 
@@ -233,7 +236,7 @@ export namespace Equatable {
       });
     }
 
-    return Equatable.EqualsResult.Equal;
+    return EqualsResult.Equal;
   }
 
   /**
@@ -242,11 +245,7 @@ export namespace Equatable {
   export function strictEquals<T extends bigint | boolean | number | string>(
     left: T,
     right: T,
-  ) {
-    return Equatable.EqualsResult.fromBooleanEqualsResult(
-      left,
-      right,
-      left === right,
-    );
+  ): EqualsResult {
+    return EqualsResult.fromBooleanEqualsResult(left, right, left === right);
   }
 }
