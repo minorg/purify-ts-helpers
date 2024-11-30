@@ -10,6 +10,18 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "correctness": {
+        "useImportExtensions": {
+          "level": "error",
+          "options": {
+            "suggestedExtensions": {
+              "ts": {
+                "module": "js"
+              }
+            }
+          }
+        }
+      },
       "recommended": true,
       "suspicious": {
         "noExplicitAny": "off"
