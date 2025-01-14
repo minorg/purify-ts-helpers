@@ -35,4 +35,7 @@ export namespace Eithers {
       rightEquals(leftEither.unsafeCoerce(), rightEither.unsafeCoerce()),
     );
   }
+
+  export type UnwrapL<T> = T extends Either<infer L, any> ? L : never;
+  export type UnwrapR<T> = T extends Either<any, infer R> ? R : never;
 }

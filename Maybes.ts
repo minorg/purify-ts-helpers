@@ -2,6 +2,8 @@ import { Left, type Maybe } from "purify-ts";
 import { Equatable } from "./Equatable.js";
 
 export namespace Maybes {
+  export type MaybeT<T> = T extends Maybe<infer X> ? X : never;
+
   export function equals<T>(
     leftMaybe: Maybe<T>,
     rightMaybe: Maybe<T>,
@@ -41,4 +43,6 @@ export namespace Maybes {
   //
   //   orThrow();
   // }
+
+  export type Unwrap<T> = T extends Maybe<infer X> ? X : never;
 }
